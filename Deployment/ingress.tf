@@ -3,7 +3,7 @@ resource "helm_release" "ingress-nginx" {
   repository       = "https://kubernetes.github.io/ingress-nginx"
   chart            = "ingress-nginx"
   namespace        = "ingress"
-  version          = "4.8.4"
+  version          = "4.9.0"
   create_namespace = true
   timeout          = 300
 
@@ -24,7 +24,7 @@ resource "helm_release" "ingress-nginx" {
 }
 
 
-resource "kubernetes_ingress_v1" "sre-task" {
+resource "kubernetes_ingress_v1" "ingress" {
   wait_for_load_balancer = true
   metadata {
     name      = "sre-task-ingress"
@@ -35,7 +35,7 @@ resource "kubernetes_ingress_v1" "sre-task" {
   }
   spec {
     rule {
-      #   host = "backend.io"
+      host = var.domain_name
       http {
         path {
           path      = "/"
@@ -52,4 +52,6 @@ resource "kubernetes_ingress_v1" "sre-task" {
       }
     }
   }
+
+  depends_on = [helm_release.ingress-nginx]
 }

@@ -1,3 +1,4 @@
+helm repo update
 cd Infra
 terraform init -upgrade
 terraform fmt

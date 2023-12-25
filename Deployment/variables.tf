@@ -18,7 +18,7 @@ variable "vpc_cidr" {
 
 variable "domain_name" {
   type        = string
-  default     = "drayco.com"
+  default     = "sundayadigun.com"
   description = "Domain name"
 }
 
