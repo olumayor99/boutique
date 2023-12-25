@@ -28,8 +28,8 @@ module "eks_blueprints_addons" {
   # enable_cluster_autoscaler = true
   # enable_karpenter                      = false
   # enable_external_dns                   = true
-  enable_kube_prometheus_stack = true
-  enable_metrics_server        = true
+  enable_kube_prometheus_stack          = true
+  enable_metrics_server                 = true
   enable_cert_manager                   = true
   cert_manager_route53_hosted_zone_arns = [aws_route53_zone.ingress-nginx.arn]
 
