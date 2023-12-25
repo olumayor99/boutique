@@ -42,3 +42,23 @@ resource "helm_release" "external-dns" {
     value = kubernetes_service_account.external-dns.metadata[0].name
   }
 }
+
+module "acm" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> 4.0"
+
+  domain_name = aws_route53_zone.ingress-nginx.name
+  zone_id     = aws_route53_zone.ingress-nginx.zone_id
+
+  validation_method = "DNS"
+
+  subject_alternative_names = [
+    "*.${aws_route53_zone.ingress-nginx.name}",
+  ]
+
+  wait_for_validation = true
+
+  tags = {
+    Environment = "Dev"
+  }
+}

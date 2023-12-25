@@ -21,6 +21,11 @@ resource "helm_release" "ingress-nginx" {
     name  = "rbac.create"
     value = "true"
   }
+
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
+    value = "nlb"
+  }
 }
 
 
@@ -34,6 +39,9 @@ resource "kubernetes_ingress_v1" "frontend" {
     }
   }
   spec {
+    tls {
+      hosts = [var.domain_name, "www.${var.domain_name}"]
+    }
     rule {
       host = var.domain_name
       http {
@@ -83,6 +91,9 @@ resource "kubernetes_ingress_v1" "grafana" {
     }
   }
   spec {
+    tls {
+      hosts = ["grafana.${var.domain_name}"]
+    }
     rule {
       host = "grafana.${var.domain_name}"
       http {
