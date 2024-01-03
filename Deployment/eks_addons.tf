@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 module "eks_blueprints_addons" {
   source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "~> 1.12.0" #ensure to update this to the latest/desired version
+  version = "~> 1.12.0"
 
   cluster_name      = data.aws_eks_cluster.cluster.name
   cluster_endpoint  = data.aws_eks_cluster.cluster.endpoint
@@ -24,14 +24,14 @@ module "eks_blueprints_addons" {
     }
   }
 
-  # enable_aws_load_balancer_controller   = false
-  # enable_cluster_autoscaler = true
+  # enable_cluster_autoscaler             = true
   # enable_karpenter                      = false
   # enable_external_dns                   = true
+  # enable_aws_load_balancer_controller   = true
   enable_kube_prometheus_stack          = true
   enable_metrics_server                 = true
   enable_cert_manager                   = true
-  cert_manager_route53_hosted_zone_arns = [aws_route53_zone.ingress-nginx.arn]
+  cert_manager_route53_hosted_zone_arns = [data.aws_route53_zone.ingress.arn]
 
   tags = {
     Environment = "dev"

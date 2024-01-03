@@ -24,9 +24,9 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project     = "SRExam"
-      Owner       = "Karl"
-      Environment = "neutron"
+      Project     = "Test"
+      Owner       = "Gredenskiy"
+      Environment = "Dev"
     }
   }
 }

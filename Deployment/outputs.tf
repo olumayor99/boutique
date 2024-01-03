@@ -7,5 +7,5 @@ output "oidc_issuer" {
 }
 
 output "nameservers" {
-  value = aws_route53_zone.ingress-nginx.name_servers
+  value = data.aws_route53_zone.ingress.name_servers
 }

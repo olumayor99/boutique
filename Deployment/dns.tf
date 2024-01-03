@@ -1,4 +1,8 @@
-resource "aws_route53_zone" "ingress-nginx" {
+# resource "aws_route53_zone" "ingress-nginx" {
+#   name = var.domain_name
+# }
+
+data "aws_route53_zone" "ingress" {
   name = var.domain_name
 }
 
@@ -14,12 +18,12 @@ resource "helm_release" "external-dns" {
 
   set_list {
     name  = "domainFilters"
-    value = [aws_route53_zone.ingress-nginx.name]
+    value = [data.aws_route53_zone.ingress.name]
   }
 
   set {
     name  = "txtPrefix"
-    value = aws_route53_zone.ingress-nginx.zone_id
+    value = data.aws_route53_zone.ingress.id
   }
 
   set {
@@ -43,22 +47,22 @@ resource "helm_release" "external-dns" {
   }
 }
 
-module "acm" {
-  source  = "terraform-aws-modules/acm/aws"
-  version = "~> 4.0"
+# module "acm" {
+#   source  = "terraform-aws-modules/acm/aws"
+#   version = "~> 4.0"
 
-  domain_name = aws_route53_zone.ingress-nginx.name
-  zone_id     = aws_route53_zone.ingress-nginx.zone_id
+#   domain_name = aws_route53_zone.ingress-nginx.name
+#   zone_id     = aws_route53_zone.ingress-nginx.zone_id
 
-  validation_method = "DNS"
+#   validation_method = "DNS"
 
-  subject_alternative_names = [
-    "*.${aws_route53_zone.ingress-nginx.name}",
-  ]
+#   subject_alternative_names = [
+#     "*.${aws_route53_zone.ingress-nginx.name}",
+#   ]
 
-  wait_for_validation = true
+#   wait_for_validation = true
 
-  tags = {
-    Environment = "Dev"
-  }
-}
+#   tags = {
+#     Environment = "Dev"
+#   }
+# }

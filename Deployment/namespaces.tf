@@ -9,3 +9,9 @@ resource "kubernetes_namespace" "dev" {
     name = "dev"
   }
 }
+
+resource "kubernetes_namespace" "argo" {
+  metadata {
+    name = "argo-cd"
+  }
+}
