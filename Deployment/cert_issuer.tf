@@ -1,12 +1,12 @@
 resource "kubectl_manifest" "cert_issuer" {
-   yaml_body = <<YAML
+  yaml_body  = <<YAML
     apiVersion: cert-manager.io/v1
     kind: ClusterIssuer
     metadata:
       name: letsencrypt-prod
     spec:
       acme:
-        email: oom.taiwo@gmail.com
+        email: brotherly647@gmail.com
         privateKeySecretRef:
           name: letsencrypt-prod-tls
         server: https://acme-v02.api.letsencrypt.org/directory
@@ -15,6 +15,6 @@ resource "kubectl_manifest" "cert_issuer" {
             ingress:
               class: nginx
     YAML
-    depends_on = [module.eks_blueprints_addons]
+  depends_on = [module.eks_blueprints_addons]
 }
 

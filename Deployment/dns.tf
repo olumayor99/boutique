@@ -1,18 +1,12 @@
-# resource "aws_route53_zone" "ingress-nginx" {
-#   name = var.domain_name
-# }
-
 data "aws_route53_zone" "ingress" {
   name = var.domain_name
 }
 
 resource "helm_release" "external-dns" {
-  name       = "external-dns"
-  repository = "oci://registry-1.docker.io/bitnamicharts"
-  chart      = "external-dns"
-  # namespace        = "external-dns"
-  version = "6.28.6"
-  # create_namespace = true
+  name         = "external-dns"
+  repository   = "oci://registry-1.docker.io/bitnamicharts"
+  chart        = "external-dns"
+  version      = "6.28.6"
   force_update = true
   timeout      = 300
 
@@ -46,23 +40,3 @@ resource "helm_release" "external-dns" {
     value = kubernetes_service_account.external-dns.metadata[0].name
   }
 }
-
-# module "acm" {
-#   source  = "terraform-aws-modules/acm/aws"
-#   version = "~> 4.0"
-
-#   domain_name = aws_route53_zone.ingress-nginx.name
-#   zone_id     = aws_route53_zone.ingress-nginx.zone_id
-
-#   validation_method = "DNS"
-
-#   subject_alternative_names = [
-#     "*.${aws_route53_zone.ingress-nginx.name}",
-#   ]
-
-#   wait_for_validation = true
-
-#   tags = {
-#     Environment = "Dev"
-#   }
-# }

@@ -26,16 +26,6 @@ resource "helm_release" "ingress-nginx" {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
     value = "nlb"
   }
-
-  # set {
-  #   name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
-  #   value = module.acm.acm_certificate_arn
-  # }
-
-  # set {
-  #   name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-ports"
-  #   value = "443"
-  # }
 }
 
 
@@ -51,11 +41,11 @@ resource "kubernetes_ingress_v1" "frontend" {
   }
   spec {
     tls {
-      hosts       = [var.domain_name, "www.${var.domain_name}"]
+      hosts       = ["frontend.${var.domain_name}", "app.${var.domain_name}"]
       secret_name = "frontend-cert-tls"
     }
     rule {
-      host = var.domain_name
+      host = "frontend.${var.domain_name}"
       http {
         path {
           path      = "/"
@@ -72,7 +62,7 @@ resource "kubernetes_ingress_v1" "frontend" {
       }
     }
     rule {
-      host = "www.${var.domain_name}"
+      host = "app.${var.domain_name}"
       http {
         path {
           path      = "/"
@@ -127,7 +117,7 @@ resource "kubernetes_ingress_v1" "grafana" {
     }
   }
 
-  depends_on = [helm_release.ingress-nginx]
+  depends_on = [helm_release.ingress-nginx, module.eks_blueprints_addons]
 }
 
 resource "kubernetes_ingress_v1" "argo" {
