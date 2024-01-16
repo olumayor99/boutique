@@ -27,8 +27,8 @@ data "aws_eks_cluster" "cluster" {
 
 provider "aws" {
   region     = var.aws_region
-  access_key = "AKIAYSLEFGVYVRYJ6AH7"
-  secret_key = "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"
+  access_key = "AWS-ACCESS-KEY"
+  secret_key = "AWS-SECRET"
 
   default_tags {
     tags = {
