@@ -416,7 +416,7 @@ resource "kubernetes_deployment_v1" "frontend" {
           }
           env {
             name  = "FRONTEND_MESSAGE"
-            value = "Replace this with a message you want to display on all pages."
+            value = "Follow along on Doyenify.com."
           }
 
           resources {

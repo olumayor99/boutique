@@ -15,3 +15,9 @@ resource "kubernetes_namespace" "argo" {
     name = "argo-cd"
   }
 }
+
+resource "kubernetes_namespace" "gitlab" {
+  metadata {
+    name = "gitlab"
+  }
+}

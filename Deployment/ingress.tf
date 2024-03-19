@@ -41,11 +41,11 @@ resource "kubernetes_ingress_v1" "frontend" {
   }
   spec {
     tls {
-      hosts       = ["frontend.${var.domain_name}", "app.${var.domain_name}"]
+      hosts       = ["app.${var.domain_name}", "web.${var.domain_name}"]
       secret_name = "frontend-cert-tls"
     }
     rule {
-      host = "frontend.${var.domain_name}"
+      host = "web.${var.domain_name}"
       http {
         path {
           path      = "/"
@@ -134,11 +134,11 @@ resource "kubernetes_ingress_v1" "argo" {
   }
   spec {
     tls {
-      hosts       = ["argo.${var.domain_name}"]
+      hosts       = ["argocd.${var.domain_name}"]
       secret_name = "argo-cert-tls"
     }
     rule {
-      host = "argo.${var.domain_name}"
+      host = "argocd.${var.domain_name}"
       http {
         path {
           path      = "/"

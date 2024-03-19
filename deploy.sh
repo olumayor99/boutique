@@ -9,3 +9,8 @@ terraform init -upgrade
 terraform fmt
 terraform validate
 terraform apply --auto-approve
+cd ../new_relic
+terraform init -upgrade
+terraform fmt
+terraform validate
+terraform apply --auto-approve

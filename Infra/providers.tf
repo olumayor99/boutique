@@ -15,12 +15,20 @@ terraform {
       version = ">= 2.12.0"
     }
   }
+
+  backend "s3" {
+    bucket         = "olatest-logger-lambda"
+    key            = "terraform/infra/terraform_aws.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-s3-backend-locking"
+    encrypt        = true
+  }
 }
 
 provider "aws" {
-  region     = var.aws_region
-  access_key = "AWS-ACCESS-KEY"
-  secret_key = "AWS-SECRET"
+  region = var.aws_region
+  # access_key = "AWS-ACCESS-KEY"
+  # secret_key = "AWS-SECRET"
 
   default_tags {
     tags = {

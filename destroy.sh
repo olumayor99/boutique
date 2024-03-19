@@ -1,1 +1,1 @@
-cd Deployment && terraform destroy --auto-approve && cd ../Infra && terraform destroy --auto-approve
+cd new_relic && terraform destroy --auto-approve && cd ../Deployment && terraform destroy --auto-approve && cd ../Infra && terraform destroy --auto-approve
