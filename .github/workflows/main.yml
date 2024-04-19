@@ -1,0 +1,75 @@
+name: Terraform on Main Push
+
+on:
+  push:
+    branches:
+      - main
+env:
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    AWS_DEFAULT_REGION: 'us-east-1'
+
+jobs:
+    
+  Deploy_Infrastructure:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.1.7
+
+    - name: Inititialize Infra Code
+      run: terraform -chdir=Infra init -upgrade
+
+    - name: Format Infra Code
+      run: terraform -chdir=Infra fmt
+
+    - name: Deploy Infra
+      run: terraform -chdir=Infra apply -auto-approve
+
+  Deploy_Microservices:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.1.7
+
+    - name: Inititialize Microservices Code
+      run: terraform -chdir=Deployment init -upgrade
+
+    - name: Format Microservices Code
+      run: terraform -chdir=Deployment fmt
+
+    - name: Deploy Microservices
+      run: terraform -chdir=Deployment apply -auto-approve
+
+#   Deploy_New_Relic:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
+
+#     - name: Set up Terraform
+#       uses: hashicorp/setup-terraform@v3
+#       with:
+#         terraform_version: 1.1.7
+
+#     - name: Inititialize New_Relic Code
+#       run: terraform -chdir=new_relic init -upgrade
+
+#     - name: Format New_Relic Code
+#       run: terraform -chdir=new_relic fmt
+
+#     - name: Deploy New_Relic
+#       run: terraform -chdir=new_relic apply -auto-approve

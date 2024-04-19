@@ -23,9 +23,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     general = {
-      min_size     = 2
-      max_size     = 4
-      desired_size = 3
+      min_size     = 4
+      max_size     = 6
+      desired_size = 4
 
       instance_types = ["t3.medium"]
       capacity_type  = "ON_DEMAND"
@@ -43,9 +43,9 @@ module "eks" {
     }
 
     spot = {
-      min_size     = 2
-      max_size     = 4
-      desired_size = 3
+      min_size     = 4
+      max_size     = 6
+      desired_size = 4
 
       instance_types = ["t3.medium"]
       capacity_type  = "SPOT"
