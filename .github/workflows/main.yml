@@ -33,6 +33,7 @@ jobs:
       run: terraform -chdir=Infra apply -auto-approve
 
   Deploy_Microservices:
+    needs: [Deploy_Infrastructure]
     runs-on: ubuntu-latest
     
     steps:
