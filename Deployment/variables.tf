@@ -27,9 +27,3 @@ variable "cluster_name" {
   default     = "boutique-EKS"
   description = "Name of the EKS Cluster"
 }
-
-variable "oidc_issuer" {
-  type        = string
-  default     = "oidc.eks.us-east-1.amazonaws.com/id/5F43A6DD610A5542C68E94BB3EDE7427"
-  description = "OIDC issuer of the EKS Cluster"
-}
