@@ -6,7 +6,7 @@ resource "kubectl_manifest" "cert_issuer" {
       name: letsencrypt-prod
     spec:
       acme:
-        email: brotherly647@gmail.com
+        email: olumayor99@yahoo.com
         privateKeySecretRef:
           name: letsencrypt-prod-tls
         server: https://acme-v02.api.letsencrypt.org/directory
